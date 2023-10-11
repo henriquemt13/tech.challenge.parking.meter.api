@@ -1,10 +1,11 @@
 package com.tech.challenge.parking.meter.api.controller;
 
+import com.tech.challenge.parking.meter.api.domain.dto.response.AlocacaoInfosResponseDTO;
+import com.tech.challenge.parking.meter.api.domain.dto.response.AlocacaoResponseDTO;
 import com.tech.challenge.parking.meter.api.service.AlocacaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +21,18 @@ public class AlocacaoController {
     private final AlocacaoService service;
 
     @PostMapping
-    @ApiResponse(description = "Alocacao Response", responseCode = "201")
+    @ApiResponse(description = "Void", responseCode = "201")
     @Operation(summary = "Create Veiculo", description = """
           # Registra nova entrada
           ---
           notes:
           - No campo 'tipo', informe CARRO ou MOTO;
           """)
-    public ResponseEntity<CreateResponseDTO> createEntrada(
+    public ResponseEntity<Void> createEntrada(
           @RequestBody @Valid String placa) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-              .body(new CreateResponseDTO(service.save(pessoaRequestDTO)));
+        service.createEntrada(placa);
+        return ResponseEntity.status(HttpStatus.OK)
+              .build();
     }
 
     @PostMapping
@@ -41,10 +43,10 @@ public class AlocacaoController {
           notes:
           - No campo 'tipo', informe CARRO ou MOTO;
           """)
-    public ResponseEntity<CreateResponseDTO> createSaida(
-          @RequestBody @Valid PessoaRequestDTO pessoaRequestDTO) {
+    public ResponseEntity<AlocacaoResponseDTO> createSaida(
+          @RequestBody @Valid String placa) {
         return ResponseEntity.status(HttpStatus.CREATED)
-              .body(new CreateResponseDTO(service.save(pessoaRequestDTO)));
+              .body(service.createSaida(placa));
     }
 
     @GetMapping
@@ -55,7 +57,7 @@ public class AlocacaoController {
           notes:
           - Este endpoint deve retornar informações como: número de vagas disponíveis e alocadas;
           """)
-    public ResponseEntity<List<Pessoa>> getInfos() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findByFilter(pessoaRequestDTO));
+    public ResponseEntity<AlocacaoInfosResponseDTO> getInfos() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAlocacaoInfos());
     }
 }

@@ -1,5 +1,7 @@
 package com.tech.challenge.parking.meter.api.controller;
 
+import com.tech.challenge.parking.meter.api.domain.dto.request.UpdateParquimetroDTO;
+import com.tech.challenge.parking.meter.api.domain.dto.response.ParquimetroResponseDTO;
 import com.tech.challenge.parking.meter.api.service.ParquimetroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,9 +31,8 @@ public class ParquimetroController {
           precoHoraExtra;
           """)
     public ResponseEntity<Void> updateParquimetroParams(
-          @RequestBody @Valid UpdatePessoaDTO pessoaDTO) {
-        Pessoa pessoa = validatePessoaById(pessoaId);
-        service.update(pessoaDTO, pessoa);
+          @RequestBody @Valid UpdateParquimetroDTO parquimetroDTO) {
+        service.update(parquimetroDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -43,7 +44,7 @@ public class ParquimetroController {
           notes:
           - Este endpoint deve trazer todos os parâmetros atuais do parquimetro;
           """)
-    public ResponseEntity<List<Pessoa>> getParquimetroParams() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findByFilter(pessoaRequestDTO));
+    public ResponseEntity<ParquimetroResponseDTO> getParquimetroParams() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
 }

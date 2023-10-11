@@ -35,7 +35,7 @@ public class VeiculoController {
     public ResponseEntity<VeiculoResponseDTO> createVeiculo(
           @RequestBody @Valid VeiculoRequestDTO veiculoRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
-              .body(new VeiculoResponseDTO(service.save(veiculoRequestDTO)));
+              .body(service.save(veiculoRequestDTO));
     }
 
     @PutMapping("/{placa}")
@@ -48,8 +48,7 @@ public class VeiculoController {
           """)
     public ResponseEntity<Void> updateVeiculo(@PathVariable("placa") String placa,
           @RequestBody @Valid VeiculoRequestDTO veiculoDTO) {
-        Veiculo veiculo = validatePessoaById(pessoaId);
-        service.update(pessoaDTO, pessoa);
+        service.update(placa, veiculoDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -62,7 +61,8 @@ public class VeiculoController {
           - Para busca sem filtros, apenas deixe "{}" nos parametros da requisição no Swagger,
             ou não envie nada via, se estiver via Postman ou Swagger;
           """)
-    public ResponseEntity<List<VeiculoResponseDTO>> getAllVeiculos(VeiculoRequestDTO veiculoRequestDTO) {
+    public ResponseEntity<List<VeiculoResponseDTO>> getAllVeiculos(
+          VeiculoRequestDTO veiculoRequestDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(service.findByFilter(veiculoRequestDTO));
     }
 }

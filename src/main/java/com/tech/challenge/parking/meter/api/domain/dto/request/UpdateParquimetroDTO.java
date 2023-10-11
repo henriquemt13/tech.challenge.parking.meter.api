@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
-public class UpdateParquimetroRequestDTO {
+public class UpdateParquimetroDTO {
 
     private BigDecimal precoInicial;
     private BigDecimal horasPrecoInicial;
