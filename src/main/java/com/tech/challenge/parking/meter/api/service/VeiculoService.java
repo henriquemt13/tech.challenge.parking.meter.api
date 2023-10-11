@@ -3,6 +3,8 @@ package com.tech.challenge.parking.meter.api.service;
 import com.tech.challenge.parking.meter.api.domain.dto.request.VeiculoRequestDTO;
 import com.tech.challenge.parking.meter.api.domain.dto.response.VeiculoResponseDTO;
 import com.tech.challenge.parking.meter.api.domain.mapper.VeiculoMapper;
+import com.tech.challenge.parking.meter.api.exceptions.VeiculoAlreadyRegisteredException;
+import com.tech.challenge.parking.meter.api.exceptions.VeiculoNotFoundException;
 import com.tech.challenge.parking.meter.api.repository.VeiculoRepository;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,7 @@ public class VeiculoService {
         if (!veiculoExists(requestDTO.getPlaca())) {
             repository.save(mapper.of(requestDTO));
         }
-        throw new RuntimeException();
+        throw new VeiculoAlreadyRegisteredException(requestDTO.getPlaca());
     }
 
     public List<VeiculoResponseDTO> findByFilter(VeiculoRequestDTO requestDTO) {
@@ -30,6 +32,7 @@ public class VeiculoService {
         if (veiculoExists(currentPlaca)) {
             repository.save(mapper.of(veiculoRequestDTO));
         }
+        throw new VeiculoNotFoundException(currentPlaca);
     }
 
     public boolean veiculoExists(String placa) {
