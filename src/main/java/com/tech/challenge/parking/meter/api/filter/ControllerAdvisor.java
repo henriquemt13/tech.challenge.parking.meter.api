@@ -1,5 +1,6 @@
 package com.tech.challenge.parking.meter.api.filter;
 
+import com.tech.challenge.parking.meter.api.exceptions.BadRequestException;
 import com.tech.challenge.parking.meter.api.exceptions.NotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,13 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity handleBadRequestException(BadRequestException ex, WebRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
+
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity handleContraintViolationException(ConstraintViolationException ex, WebRequest request) {

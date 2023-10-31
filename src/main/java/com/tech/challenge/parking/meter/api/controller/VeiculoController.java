@@ -1,5 +1,6 @@
 package com.tech.challenge.parking.meter.api.controller;
 
+import com.tech.challenge.parking.meter.api.domain.dto.request.UpdateVeiculoDTO;
 import com.tech.challenge.parking.meter.api.domain.dto.request.VeiculoRequestDTO;
 import com.tech.challenge.parking.meter.api.domain.dto.response.VeiculoResponseDTO;
 import com.tech.challenge.parking.meter.api.domain.model.Veiculo;
@@ -11,15 +12,11 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
-@RestController("/api/v1/veiculo")
+@RestController
+@RequestMapping("/api/v1/veiculo")
 public class VeiculoController {
 
     private final VeiculoService service;
@@ -47,7 +44,7 @@ public class VeiculoController {
           - Veiculo precisa existir no banco;
           """)
     public ResponseEntity<Void> updateVeiculo(@PathVariable("placa") String placa,
-          @RequestBody @Valid VeiculoRequestDTO veiculoDTO) {
+          @RequestBody @Valid UpdateVeiculoDTO veiculoDTO) {
         service.update(placa, veiculoDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

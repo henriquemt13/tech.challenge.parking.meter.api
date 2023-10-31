@@ -1,10 +1,11 @@
 package com.tech.challenge.parking.meter.api.domain.dto.response;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
+@Builder
 public class AlocacaoInfosResponseDTO {
 
     private Integer vagasAlocadas;

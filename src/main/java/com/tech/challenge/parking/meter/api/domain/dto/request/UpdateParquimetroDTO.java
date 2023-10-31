@@ -9,4 +9,5 @@ public class UpdateParquimetroDTO {
     private BigDecimal precoInicial;
     private BigDecimal horasPrecoInicial;
     private BigDecimal precoHoraExtra;
+    private Integer vagas;
 }

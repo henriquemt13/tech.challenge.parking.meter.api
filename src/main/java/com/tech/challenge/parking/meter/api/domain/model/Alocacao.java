@@ -1,34 +1,41 @@
 package com.tech.challenge.parking.meter.api.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import java.time.OffsetDateTime;
-import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "alocacao")
 public class Alocacao {
 
     @Id
-    @SequenceGenerator(name = "parquimetro_seq",
-          sequenceName = "parquimetro_seq", allocationSize = 1)
-    @GeneratedValue(generator = "parquimetro_seq")
+    @SequenceGenerator(name = "alocacao_seq",
+          sequenceName = "alocacao_seq", allocationSize = 1)
+    @GeneratedValue(generator = "alocacao_seq")
     @Column(name = "id", unique = true)
     @NotNull(message = "id should not be null")
     private Long id;
-    @NotNull(message = "precoInicial should not be null")
-    @NotEmpty(message = "precoInicial should not be empty")
-    @Column(name = "preco_inicial")
+    @NotNull(message = "placa should not be null")
+    @NotEmpty(message = "placa should not be empty")
+    @Column(name = "placa")
     private String placa;
-    @NotNull(message = "entrada should not be null")
     @Column(name = "entrada")
-    private OffsetDateTime entrada;
-    @NotNull(message = "saida should not be null")
+    private LocalDateTime entrada;
     @Column(name = "saida")
-    private OffsetDateTime saida;
+    private LocalDateTime saida;
     @Column(name = "created_at")
     @CreationTimestamp
     private OffsetDateTime createdAt;
@@ -36,5 +43,10 @@ public class Alocacao {
     @NotBlank(message = "Please enter createdBy")
     @Column(name = "created_by")
     private String createdBy;
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private OffsetDateTime updatedAt;
+    @Column(name = "updated_by")
+    private String updatedBy;
 
 }
