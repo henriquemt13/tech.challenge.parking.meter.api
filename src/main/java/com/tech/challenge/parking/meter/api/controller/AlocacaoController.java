@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 public class AlocacaoController {
 
     private final AlocacaoService service;
-
     @PostMapping(value = "/entrada/{placa}")
     @ApiResponse(description = "Void", responseCode = "201")
     @Operation(summary = "Create Veiculo", description = """
@@ -41,10 +40,11 @@ public class AlocacaoController {
           notes:
           - No campo 'tipo', informe CARRO ou MOTO;
           """)
-    public ResponseEntity<AlocacaoResponseDTO> createSaida(
+    public ResponseEntity<Void> createSaida(
             @PathVariable("placa") String placa) {
+        service.createSaida(placa);
         return ResponseEntity.status(HttpStatus.CREATED)
-              .body(service.createSaida(placa));
+              .build();
     }
 
     @GetMapping

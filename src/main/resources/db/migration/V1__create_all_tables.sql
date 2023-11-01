@@ -42,5 +42,23 @@ create table parquimetro(
 ALTER SEQUENCE parquimetro_seq
 OWNED BY parquimetro.id;
 
+create sequence extrato_alocacao_seq;
+create table extrato_alocacao(
+	id int primary key not null DEFAULT nextval('extrato_alocacao_seq'),
+	alocacao_id int not null,
+	placa char(7) not null,
+	horas_estadia int not null,
+	valor_calculado decimal(10,2) not null,
+	created_at timestamp not null,
+    created_by varchar(150),
+    updated_at timestamp,
+    updated_by varchar(150),
+    constraint fk_alocacao
+            foreign key (alocacao_id)
+                references alocacao(id)
+);
+ALTER SEQUENCE alocacao_seq
+OWNED BY alocacao.id;
+
 
 insert into parquimetro (vagas) values (150);

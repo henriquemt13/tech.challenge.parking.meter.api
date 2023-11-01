@@ -1,9 +1,6 @@
 package com.tech.challenge.parking.meter.api.service;
 
 import com.tech.challenge.parking.meter.api.domain.dto.response.AlocacaoInfosResponseDTO;
-import com.tech.challenge.parking.meter.api.domain.dto.response.AlocacaoResponseDTO;
-import com.tech.challenge.parking.meter.api.domain.dto.response.ParquimetroResponseDTO;
-import com.tech.challenge.parking.meter.api.domain.mapper.AlocacaoMapper;
 import com.tech.challenge.parking.meter.api.domain.model.Alocacao;
 import com.tech.challenge.parking.meter.api.domain.model.Veiculo;
 import com.tech.challenge.parking.meter.api.enums.TipoVeiculoEnum;
@@ -13,8 +10,7 @@ import com.tech.challenge.parking.meter.api.repository.AlocacaoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +22,7 @@ public class AlocacaoService {
     private final AlocacaoRepository repository;
     private final ParquimetroService parquimetroService;
     private final VeiculoService veiculoService;
-    private final AlocacaoMapper mapper;
+    private final QueueExtratoService queueExtratoService;
 
     public void createEntrada(String placa) {
         if (!isEntradaValid(placa)) {
@@ -51,11 +47,12 @@ public class AlocacaoService {
         return repository.findBySaidaIsNull().size() < parquimetroService.findInfos().get(0).getTotalVagas();
     }
 
-    public AlocacaoResponseDTO createSaida(String placa) {
+    public void createSaida(String placa) {
         var saida = validateSaida(placa);
         saida.setUpdatedBy("System");
         saida.setSaida(LocalDateTime.now());
-        return calculateParkingPrice(repository.save(saida));
+        repository.save(saida);
+        queueExtratoService.saveNewExtrato(placa);
     }
 
     private Alocacao validateSaida(String placa) {
@@ -110,24 +107,7 @@ public class AlocacaoService {
         return veiculos.stream().filter(veiculo -> veiculo.getTipoVeiculo() == TipoVeiculoEnum.MOTO).toList().size();
     }
 
-    private AlocacaoResponseDTO calculateParkingPrice(Alocacao alocacao) {
-        var parquimetroInfos = parquimetroService.findInfos().get(0);
-        var response = mapper.of(alocacao);
-        response.setHorasAlocado(getParkingTime(alocacao));
-        response.setPrecoAPagar(String.format("R$ %s", getFinalPrice(response.getHorasAlocado(), parquimetroInfos)));
-        return response;
-    }
-
-    private Integer getParkingTime(Alocacao alocacao) {
-        return Duration.between(alocacao.getEntrada(), alocacao.getSaida()).toHoursPart();
-    }
-
-    private BigDecimal getFinalPrice(Integer parkingTime, ParquimetroResponseDTO parquimetro) {
-        if (parkingTime > parquimetro.getHorasPrecoInicial()) {
-            return parquimetro.getPrecoInicial()
-                    .add(parquimetro.getPrecoHoraExtra()
-                            .multiply(BigDecimal.valueOf(parkingTime - parquimetro.getHorasPrecoInicial())));
-        }
-        return parquimetro.getPrecoInicial();
+    public Optional<Alocacao> getAlocacaoById(Long id) {
+        return repository.findById(id);
     }
 }
