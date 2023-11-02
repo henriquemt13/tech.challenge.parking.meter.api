@@ -1,13 +1,11 @@
-package com.tech.challenge.parking.meter.api.domain.dto.response;
+package com.tech.challenge.parking.meter.api.domain.dto.request;
 
 import com.tech.challenge.parking.meter.api.enums.TipoVeiculoEnum;
-import java.util.Date;
 import lombok.Data;
 
 @Data
-public class VeiculoResponseDTO {
+public class UpdateVeiculoDTO {
 
-    private String placa;
     private TipoVeiculoEnum tipoVeiculo;
     private String modelo;
     private String cor;

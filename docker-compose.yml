@@ -1,9 +1,14 @@
 version: "4.0"
 
 services:
+  rabbitmq:
+    image: rabbitmq:3.9.7-management
+    ports:
+      - 5672:5672
+      - 15672:15672
   database:
     image: postgres:13
-    container_name: energy_consumption
+    container_name: parking_meter
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
@@ -11,7 +16,7 @@ services:
     ports:
       - 5432:5432
 
-  energy-consumption-api:
+  parking-meter-api:
     build:
       context: .
       dockerfile: Dockerfile

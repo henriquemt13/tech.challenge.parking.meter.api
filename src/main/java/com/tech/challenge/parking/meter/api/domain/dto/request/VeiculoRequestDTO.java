@@ -3,7 +3,6 @@ package com.tech.challenge.parking.meter.api.domain.dto.request;
 import com.tech.challenge.parking.meter.api.enums.TipoVeiculoEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.util.Date;
 import lombok.Data;
 
 @Data
@@ -13,14 +12,14 @@ public class VeiculoRequestDTO {
     private String placa;
     @NotNull(message = "tipoVeiculo should not be null")
     private TipoVeiculoEnum tipoVeiculo;
-    @NotNull(message = "Please enter message")
-    @NotBlank(message = "Please enter message")
+    @NotNull(message = "Please enter modelo")
+    @NotBlank(message = "Please enter modelo")
     private String modelo;
     @NotNull(message = "Please enter cor")
     @NotBlank(message = "Please enter cor")
     private String cor;
     @NotNull(message = "Please enter ano")
-    private Date ano;
+    private String ano;
     @NotNull(message = "Please enter nomeDono")
     @NotBlank(message = "Please enter nomeDono")
     private String nomeDono;

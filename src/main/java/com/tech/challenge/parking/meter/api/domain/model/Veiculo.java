@@ -27,10 +27,11 @@ public class Veiculo {
     @NotNull(message = "placa should not be null")
     private String placa;
     @NotNull(message = "tipoVeiculo should not be null")
+    @Column(name = "tipo")
     private TipoVeiculoEnum tipoVeiculo;
     @NotNull(message = "Please enter message")
     @NotBlank(message = "Please enter message")
-    @Column(name = "message")
+    @Column(name = "modelo")
     private String modelo;
     @NotNull(message = "Please enter cor")
     @NotBlank(message = "Please enter cor")
@@ -38,7 +39,7 @@ public class Veiculo {
     private String cor;
     @NotNull(message = "Please enter ano")
     @Column(name = "ano")
-    private Date ano;
+    private String ano;
     @NotNull(message = "Please enter nomeDono")
     @NotBlank(message = "Please enter nomeDono")
     @Column(name = "nome_dono")

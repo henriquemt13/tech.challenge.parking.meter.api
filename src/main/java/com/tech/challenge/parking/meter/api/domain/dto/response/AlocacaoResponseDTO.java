@@ -1,6 +1,6 @@
 package com.tech.challenge.parking.meter.api.domain.dto.response;
 
-import java.sql.Time;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,7 +9,9 @@ import lombok.Data;
 public class AlocacaoResponseDTO {
 
     private String placa;
-    private Time tempoAlocado;
+    private LocalDateTime entrada;
+    private LocalDateTime saida;
+    private Integer horasAlocado;
     private String precoAPagar;
 
 }
