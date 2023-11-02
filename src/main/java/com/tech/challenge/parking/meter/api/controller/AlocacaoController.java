@@ -23,7 +23,7 @@ public class AlocacaoController {
           # Registra nova entrada
           ---
           notes:
-          - No campo 'tipo', informe CARRO ou MOTO;
+          - Veiculo precisa existir no banco e não ter registros de entrada, ou entrada sem saída;
           """)
     public ResponseEntity<Void> createEntrada(
             @PathVariable("placa") String placa) {
@@ -38,7 +38,7 @@ public class AlocacaoController {
           # Registra nova saída
           ---
           notes:
-          - No campo 'tipo', informe CARRO ou MOTO;
+          - Veiculo precisa existir no banco e ter um registro de entrada;
           """)
     public ResponseEntity<Void> createSaida(
             @PathVariable("placa") String placa) {

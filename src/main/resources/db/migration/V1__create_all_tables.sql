@@ -61,4 +61,4 @@ ALTER SEQUENCE alocacao_seq
 OWNED BY alocacao.id;
 
 
-insert into parquimetro (vagas) values (150);
+insert into parquimetro (vagas, preco_inicial, preco_hora_extra, horas_preco_inicial) values (150, 10.00, 5.00, 3);
