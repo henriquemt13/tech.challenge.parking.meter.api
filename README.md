@@ -20,8 +20,11 @@ palavras chave: Escalabilidade, Alta Disponibilidade e Rápido Processamento.
 Para desenvolver então esse projeto, foram pensadas em Quatro entidades principais: o Parquimetro, o Estacionamento, o Extrato e o Veiculo.
 
 **O Parquimetro**: Possui informações referentes a quantidade total de vagas disponíveis pela cidade, e o preço inicial da alocação.
+<br>
 **O Estacionamento**: Possui informações referentes ao total de vagas alocadas pela cidade em tempo real, total de vagas disponíveis pela cidade em tempo real e total de carros e motos alocados em tempo real.
+<br>
 **O Extrato**: Possui informações referentes ao momento de entrada e saída do veículo do local de estacionamento, tempo de estacionamento contratado e valor a pagar
+<br>
 **O Veiculo**: Possui informações referentes a identificação do veículo e de seu dono.
 
 ---
