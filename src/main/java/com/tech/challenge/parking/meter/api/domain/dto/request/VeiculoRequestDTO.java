@@ -1,6 +1,7 @@
 package com.tech.challenge.parking.meter.api.domain.dto.request;
 
 import com.tech.challenge.parking.meter.api.enums.TipoVeiculoEnum;
+import com.tech.challenge.parking.meter.api.validator.Document;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -23,6 +24,10 @@ public class VeiculoRequestDTO {
     @NotNull(message = "Please enter nomeDono")
     @NotBlank(message = "Please enter nomeDono")
     private String nomeDono;
+    @Document
+    @NotNull(message = "Please enter documentoDono")
+    @NotBlank(message = "Please enter documentoDono")
+    private String documentoDono;
     @NotNull(message = "Please enter contatoDono")
     @NotBlank(message = "Please enter contatoDono")
     private String contatoDono;

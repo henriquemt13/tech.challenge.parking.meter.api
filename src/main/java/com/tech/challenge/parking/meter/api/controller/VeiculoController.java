@@ -28,6 +28,7 @@ public class VeiculoController {
           ---
           notes:
           - No campo 'tipoVeiculo', informe CARRO ou MOTO;
+          - No campo 'documento', informe o CPF ou CNPJ do dono do veículo;
           """)
     public ResponseEntity<VeiculoResponseDTO> createVeiculo(
           @RequestBody @Valid VeiculoRequestDTO veiculoRequestDTO) {

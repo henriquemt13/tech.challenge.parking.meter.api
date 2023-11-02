@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 public class UpdateParquimetroDTO {
 
+    private Integer totalVagasCidade;
     private BigDecimal precoInicial;
-    private BigDecimal horasPrecoInicial;
-    private BigDecimal precoHoraExtra;
-    private Integer vagas;
 }

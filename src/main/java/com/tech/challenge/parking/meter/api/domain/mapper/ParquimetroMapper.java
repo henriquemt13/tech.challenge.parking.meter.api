@@ -13,7 +13,6 @@ import java.util.List;
 @Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, componentModel = "spring")
 public interface ParquimetroMapper {
 
-    @Mapping(target = "totalVagas", source = "vagas")
     ParquimetroResponseDTO of(Parquimetro parquimetro);
 
     List<ParquimetroResponseDTO> of(List<Parquimetro> parquimetro);

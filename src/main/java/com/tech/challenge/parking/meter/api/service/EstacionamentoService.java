@@ -1,12 +1,13 @@
 package com.tech.challenge.parking.meter.api.service;
 
-import com.tech.challenge.parking.meter.api.domain.dto.response.AlocacaoInfosResponseDTO;
-import com.tech.challenge.parking.meter.api.domain.model.Alocacao;
+import com.tech.challenge.parking.meter.api.domain.dto.request.EntradaEstacionamentoRequestDTO;
+import com.tech.challenge.parking.meter.api.domain.dto.response.EstacionamentoInfosResponseDTO;
+import com.tech.challenge.parking.meter.api.domain.model.Estacionamento;
 import com.tech.challenge.parking.meter.api.domain.model.Veiculo;
 import com.tech.challenge.parking.meter.api.enums.TipoVeiculoEnum;
 import com.tech.challenge.parking.meter.api.exceptions.InvalidAlocacaoException;
 import com.tech.challenge.parking.meter.api.exceptions.VeiculoNotFoundException;
-import com.tech.challenge.parking.meter.api.repository.AlocacaoRepository;
+import com.tech.challenge.parking.meter.api.repository.EstacionamentoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,24 +18,20 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class AlocacaoService {
+public class EstacionamentoService {
 
-    private final AlocacaoRepository repository;
+    private final EstacionamentoRepository repository;
     private final ParquimetroService parquimetroService;
     private final VeiculoService veiculoService;
     private final QueueExtratoService queueExtratoService;
 
-    public void createEntrada(String placa) {
+    public void createEntrada(String placa, EntradaEstacionamentoRequestDTO requestDTO) {
         if (!isEntradaValid(placa)) {
             throw new InvalidAlocacaoException(placa);
         }
-        veiculoService.findByPlaca(placa).ifPresent(veiculo -> {
-            Alocacao alocacao = new Alocacao();
-            alocacao.setPlaca(placa);
-            alocacao.setCreatedBy("System");
-            alocacao.setEntrada(LocalDateTime.now());
-            repository.save(alocacao);
-        });
+        veiculoService.findByPlaca(placa).ifPresent(veiculo -> repository
+                .save(buildEstacionamentoEntrada(placa, requestDTO)));
+        queueExtratoService.saveNewExtrato(placa);
     }
 
     private boolean isEntradaValid(String placa) {
@@ -44,7 +41,17 @@ public class AlocacaoService {
     }
 
     private boolean isNotFull() {
-        return repository.findBySaidaIsNull().size() < parquimetroService.findInfos().get(0).getTotalVagas();
+        return repository.findBySaidaIsNull().size() < parquimetroService.findInfos().get(0).getTotalVagasCidade();
+    }
+
+    private Estacionamento buildEstacionamentoEntrada(String placa, EntradaEstacionamentoRequestDTO requestDTO) {
+        Estacionamento estacionamento = new Estacionamento();
+        estacionamento.setPlaca(placa);
+        estacionamento.setTempoContratado(requestDTO.getTempoContratado());
+        estacionamento.setEnderecoEstacionamento(requestDTO.getEnderecoEstacionamento());
+        estacionamento.setCreatedBy("System");
+        estacionamento.setEntrada(LocalDateTime.now());
+        return estacionamento;
     }
 
     public void createSaida(String placa) {
@@ -52,10 +59,9 @@ public class AlocacaoService {
         saida.setUpdatedBy("System");
         saida.setSaida(LocalDateTime.now());
         repository.save(saida);
-        queueExtratoService.saveNewExtrato(placa);
     }
 
-    private Alocacao validateSaida(String placa) {
+    private Estacionamento validateSaida(String placa) {
         veiculoService.veiculoExists(placa);
         var alocacao = findLastAlocacao(placa);
         if (alocacao.isPresent() && isSaidaValid(alocacao.get())) {
@@ -64,18 +70,18 @@ public class AlocacaoService {
         throw new InvalidAlocacaoException(placa);
     }
 
-    private boolean isSaidaValid(Alocacao alocacao) {
-        return alocacao.getSaida() == null;
+    private boolean isSaidaValid(Estacionamento estacionamento) {
+        return estacionamento.getSaida() == null;
     }
 
-    public Optional<Alocacao> findLastAlocacao(String placa) {
+    public Optional<Estacionamento> findLastAlocacao(String placa) {
         return repository.findFirstByPlacaOrderByCreatedAtDesc(placa);
     }
 
-    public AlocacaoInfosResponseDTO getAlocacaoInfos() {
+    public EstacionamentoInfosResponseDTO getAlocacaoInfos() {
         var alocacoes = repository.findBySaidaIsNull();
         var veiculos = getVeiculos(alocacoes);
-        return AlocacaoInfosResponseDTO.builder()
+        return EstacionamentoInfosResponseDTO.builder()
                 .vagasAlocadas(alocacoes.size())
                 .vagasDisponiveis(parquimetroService.getTotalVagas() - alocacoes.size())
                 .numeroCarroAlocados(countCarros(veiculos))
@@ -83,10 +89,10 @@ public class AlocacaoService {
                 .build();
     }
 
-    private List<Veiculo> getVeiculos(List<Alocacao> alocacoes) {
+    private List<Veiculo> getVeiculos(List<Estacionamento> alocacoes) {
         List<Veiculo> veiculos = new ArrayList<>();
-        for (Alocacao alocacao : alocacoes) {
-            veiculos.add(validateVeiculo(alocacao.getPlaca()));
+        for (Estacionamento estacionamento : alocacoes) {
+            veiculos.add(validateVeiculo(estacionamento.getPlaca()));
         }
         return veiculos;
     }
@@ -107,7 +113,7 @@ public class AlocacaoService {
         return veiculos.stream().filter(veiculo -> veiculo.getTipoVeiculo() == TipoVeiculoEnum.MOTO).toList().size();
     }
 
-    public Optional<Alocacao> getAlocacaoById(Long id) {
+    public Optional<Estacionamento> getAlocacaoById(Long id) {
         return repository.findById(id);
     }
 }
