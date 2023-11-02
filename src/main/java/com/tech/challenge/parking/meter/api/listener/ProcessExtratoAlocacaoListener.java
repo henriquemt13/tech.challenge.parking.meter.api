@@ -2,7 +2,7 @@ package com.tech.challenge.parking.meter.api.listener;
 
 import com.rabbitmq.client.Channel;
 import com.tech.challenge.parking.meter.api.configuration.RabbitMQConfig;
-import com.tech.challenge.parking.meter.api.service.ExtratoAlocacaoService;
+import com.tech.challenge.parking.meter.api.service.ExtratoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -20,7 +20,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public class ProcessExtratoAlocacaoListener {
 
-    private final ExtratoAlocacaoService extratoAlocacaoService;
+    private final ExtratoService extratoService;
 
     @RabbitListener(bindings = @QueueBinding(value = @Queue(RabbitMQConfig.QUEUE_NAME),
             exchange = @Exchange(RabbitMQConfig.EXCHANGE_NAME), key = RabbitMQConfig.ROUTING_KEY))
@@ -30,7 +30,7 @@ public class ProcessExtratoAlocacaoListener {
 
         log.info("Pending Extrato generation for Placa: {}", placa);
         try {
-            extratoAlocacaoService.saveNewExtrato(placa);
+            extratoService.saveNewExtrato(placa);
             chanel.basicAck(tag, false);
         } catch (Exception e) {
             log.error("Invalid Message Delivered", e);

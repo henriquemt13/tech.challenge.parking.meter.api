@@ -44,6 +44,10 @@ public class Veiculo {
     @NotBlank(message = "Please enter nomeDono")
     @Column(name = "nome_dono")
     private String nomeDono;
+    @NotNull(message = "Please enter documentoDono")
+    @NotBlank(message = "Please enter documentoDono")
+    @Column(name = "documento_dono")
+    private String documentoDono;
     @NotNull(message = "Please enter contatoDono")
     @NotBlank(message = "Please enter contatoDono")
     @Column(name = "contato_dono")

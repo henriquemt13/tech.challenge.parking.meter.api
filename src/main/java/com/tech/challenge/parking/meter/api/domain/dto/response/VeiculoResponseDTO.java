@@ -13,5 +13,6 @@ public class VeiculoResponseDTO {
     private String cor;
     private String ano;
     private String nomeDono;
+    private String documentoDono;
     private String contatoDono;
 }

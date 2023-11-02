@@ -20,8 +20,14 @@
 		<flyway.version>9.8.1</flyway.version>
 		<springdoc.version>2.2.0</springdoc.version>
 		<spring-amqp.version>3.0.10</spring-amqp.version>
+		<caelum.stella.bean.validation.version>2.1.6</caelum.stella.bean.validation.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>br.com.caelum.stella</groupId>
+			<artifactId>caelum-stella-bean-validation</artifactId>
+			<version>${caelum.stella.bean.validation.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

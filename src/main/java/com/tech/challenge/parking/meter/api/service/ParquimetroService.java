@@ -27,6 +27,6 @@ public class ParquimetroService {
     }
 
     public Integer getTotalVagas() {
-        return findInfos().get(0).getTotalVagas();
+        return findInfos().get(0).getTotalVagasCidade();
     }
 }

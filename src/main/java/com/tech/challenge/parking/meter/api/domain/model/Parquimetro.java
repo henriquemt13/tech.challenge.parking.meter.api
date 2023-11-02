@@ -2,7 +2,6 @@ package com.tech.challenge.parking.meter.api.domain.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -27,17 +26,11 @@ public class Parquimetro {
     @Column(name = "id", unique = true)
     @NotNull(message = "id should not be null")
     private Long id;
-    @Column(name = "vagas")
-    private Integer vagas;
+    @Column(name = "total_vagas_cidade")
+    private Integer totalVagasCidade;
     @NotNull(message = "precoInicial should not be null")
     @Column(name = "preco_inicial")
     private BigDecimal precoInicial;
-    @NotNull(message = "horasPrecoInicial should not be null")
-    @Column(name = "horas_preco_inicial")
-    private Integer horasPrecoInicial;
-    @NotNull(message = "precoHoraExtra should not be null")
-    @Column(name = "preco_hora_extra")
-    private BigDecimal precoHoraExtra;
     @Column(name = "created_at")
     @CreationTimestamp
     private OffsetDateTime createdAt;
