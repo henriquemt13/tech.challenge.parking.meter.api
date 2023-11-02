@@ -1,7 +1,7 @@
 # tech.challenge.energy.consumption
 
 ---
-## Este projeto foi feito com base no Tech Challenge da Fase 2 do curso de Arquitetura e Desenvolvimento em Java da FIAP
+## Este projeto foi feito com base no Tech Challenge da Fase 3 do curso de Arquitetura e Desenvolvimento em Java da FIAP
 
 
 ---
@@ -14,15 +14,19 @@ Sessões:
 ---
 ## Ideia por trás do desafio
 
-O desafio basicamente pede para que sejam criados três serviços, os respectivos: Pessoa, Eletrodoméstico e Endereço.
-A partir disso foi desenvolvida uma API contendo essas três entidades, criando relações entre si a partir da entidade Pessoa.
-O Fluxo de cadastro idealizado é descrito na imagem a seguir:
-![image](https://github.com/henriquemt13/tech.challenge.energy.consumption.api/assets/47531611/5a2de5e6-0080-45c0-af41-e52fe5047ff8)
-Cada entidade tem seu próprio CRUD, e cada uma tem uma funcionalidade específica e própria, como ilustrado no fluxo abaixo:
-![image](https://github.com/henriquemt13/tech.challenge.energy.consumption.api/assets/47531611/c3fa2140-178c-41f1-abda-e685cd43732d)
+O Desafio dessa fase em questão se baseia nop desenvolvimento de uma solução para um parquímetro, ou seja, uma API responsável por gerenciar um estacionamento. Não apenas um estacionamento comum, mas sim, um estabelecimento muito bem movimentado, com um alto
+fluxo de veículos entrando e saindo, seja pela primeira vez, ou não. O ponto principal do desafio não é apenas uma solução que entregue as necessidades de cadastro e computação de veículos, custo e etc, mas sim que seja escalável, com uma alta disponibilidade
+e rápido processamento.
 
+O desafio desta fase se baseia no desenvolvimento de uma nova solução para o Parquimetro, equipamento de controle de fluxo de alocações de veículos em lugares públicos. Apesar do simples conceito de implementação CRUD, a real dificuldade se apresenta nas 
+palavras chave: Escalabilidade, Alta Disponibilidade e Rápido Processamento. 
 
+Para desenvolver então esse projeto, foram pensadas em Quatro entidades principais: o Parquimetro, o Estacionamento, o Extrato e o Veiculo.
 
+**O Parquimetro**: Possui informações referentes a quantidade total de vagas disponíveis pela cidade, e o preço inicial da alocação.
+**O Estacionamento**: Possui informações referentes ao total de vagas alocadas pela cidade em tempo real, total de vagas disponíveis pela cidade em tempo real e total de carros e motos alocados em tempo real.
+**O Extrato**: Possui informações referentes ao momento de entrada e saída do veículo do local de estacionamento, tempo de estacionamento contratado e valor a pagar
+**O Veiculo**: Possui informações referentes a identificação do veículo e de seu dono.
 
 ---
 ## Relatório Técnico
