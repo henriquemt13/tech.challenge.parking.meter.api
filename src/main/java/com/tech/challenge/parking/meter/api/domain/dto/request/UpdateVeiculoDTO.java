@@ -10,6 +10,5 @@ public class UpdateVeiculoDTO {
     private String modelo;
     private String cor;
     private String ano;
-    private String nomeDono;
     private String contatoDono;
 }

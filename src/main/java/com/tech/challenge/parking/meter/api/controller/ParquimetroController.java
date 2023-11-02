@@ -27,8 +27,7 @@ public class ParquimetroController {
             # Atualiza parâmetros do parquimetro
             ---
             notes:
-            - Este endpoint deve atualizar os seguintes parâmetros: precoIncial; horasPrecoInicial 
-            precoHoraExtra;
+            - Este endpoint deve atualizar os seguintes parâmetros: precoIncial e totalVagasCidade
             """)
     public ResponseEntity<Void> updateParquimetroParams(
             @RequestBody @Valid UpdateParquimetroDTO parquimetroDTO) {

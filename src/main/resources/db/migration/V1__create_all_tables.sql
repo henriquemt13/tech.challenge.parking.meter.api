@@ -5,6 +5,7 @@ create table veiculo(
 	cor varchar(20) not null,
 	ano char(4) not null,
 	nome_dono varchar(150),
+	documento_dono varchar(15),
 	contato_dono varchar(18),
 	created_at timestamp not null,
 	created_by varchar(150),
@@ -12,27 +13,27 @@ create table veiculo(
 	updated_by varchar(150)
 );
 
-create sequence alocacao_seq;
-create table alocacao(
-	id int primary key not null DEFAULT nextval('alocacao_seq'),
+create sequence estacionamento_seq;
+create table estacionamento(
+	id int primary key not null DEFAULT nextval('estacionamento_seq'),
 	placa char(7) not null,
 	entrada timestamp not null,
+	tempo_contratado varchar(15),
 	saida timestamp null,
+	endereco_estacionamento varchar(150),
 	created_at timestamp not null,
     created_by varchar(150),
     updated_at timestamp,
     updated_by varchar(150)
 );
-ALTER SEQUENCE alocacao_seq
-OWNED BY alocacao.id;
+ALTER SEQUENCE estacionamento_seq
+OWNED BY estacionamento.id;
 
 create sequence parquimetro_seq;
 create table parquimetro(
 	id int primary key not null DEFAULT nextval('parquimetro_seq'),
-	vagas int not null,
+	total_vagas_cidade bigint not null,
 	preco_inicial decimal (10,2),
-	horas_preco_inicial int,
-	preco_hora_extra decimal (10,2),
 	created_at timestamp,
     created_by varchar(150),
     updated_at timestamp,
@@ -42,23 +43,23 @@ create table parquimetro(
 ALTER SEQUENCE parquimetro_seq
 OWNED BY parquimetro.id;
 
-create sequence extrato_alocacao_seq;
-create table extrato_alocacao(
-	id int primary key not null DEFAULT nextval('extrato_alocacao_seq'),
-	alocacao_id int not null,
+create sequence extrato_seq;
+create table extrato(
+	id int primary key not null DEFAULT nextval('extrato_seq'),
+	estacionamento_id int not null,
 	placa char(7) not null,
-	horas_estadia int not null,
-	valor_calculado decimal(10,2) not null,
+	tempo_contratado varchar(15) not null,
+	valor_pago decimal(10,2) not null,
 	created_at timestamp not null,
     created_by varchar(150),
     updated_at timestamp,
     updated_by varchar(150),
-    constraint fk_alocacao
-            foreign key (alocacao_id)
-                references alocacao(id)
+    constraint fk_estacionamento
+            foreign key (estacionamento_id)
+                references estacionamento(id)
 );
-ALTER SEQUENCE alocacao_seq
-OWNED BY alocacao.id;
+ALTER SEQUENCE extrato_seq
+OWNED BY extrato.id;
 
 
-insert into parquimetro (vagas, preco_inicial, preco_hora_extra, horas_preco_inicial) values (150, 10.00, 5.00, 3);
+insert into parquimetro (total_vagas_cidade, preco_inicial) values (15000, 2.00);
