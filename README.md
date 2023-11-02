@@ -14,10 +14,6 @@ Sessões:
 ---
 ## Ideia por trás do desafio
 
-O Desafio dessa fase em questão se baseia nop desenvolvimento de uma solução para um parquímetro, ou seja, uma API responsável por gerenciar um estacionamento. Não apenas um estacionamento comum, mas sim, um estabelecimento muito bem movimentado, com um alto
-fluxo de veículos entrando e saindo, seja pela primeira vez, ou não. O ponto principal do desafio não é apenas uma solução que entregue as necessidades de cadastro e computação de veículos, custo e etc, mas sim que seja escalável, com uma alta disponibilidade
-e rápido processamento.
-
 O desafio desta fase se baseia no desenvolvimento de uma nova solução para o Parquimetro, equipamento de controle de fluxo de alocações de veículos em lugares públicos. Apesar do simples conceito de implementação CRUD, a real dificuldade se apresenta nas 
 palavras chave: Escalabilidade, Alta Disponibilidade e Rápido Processamento. 
 
