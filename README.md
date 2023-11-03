@@ -32,10 +32,13 @@ Para desenvolver então esse projeto, foram pensadas em Quatro entidades princip
 Com o auxílo de migrations através da biblioteca **Flyway**, as entidades foram construídas e refatoradas múltiplas vezes no banco de dados sem nenhuma necessidade de ação manual. Isso combinado com a configuração da aplicação num DockerFile, mais um arquivo **docker-compose.yml**, tornaram a aplicação N vezes mais prática e rápida de ser construída. 
 <br>
 <br>
+Outra biblioteca utilizada foi o Caelum Stella Validator, de forma muito prática, auxiliou na contrução de validações para o registro de CPFs e CNPJs na aplicação.
+<br>
+<br>
 Levando em consideração as palavras chave mencionadas na seção anterior, a inovação nessa aplicação se veio pelo uso do **RabbitMQ**. Com fácil implementação e  ótima compatibilidade com o Spring, essa ferramenta de mensageria foi utilizada para a geração do Extrato a partir das informações de alocação e veículo. O uso dessa ferramenta, poderia, em uma continuação deste projeto por exemplo, executar diversas _features_ de acordo com a necessidade, como o Envio de Email com o Extrato para o Dono do Veículo, Pagamento Automático, etc.
 <br>
 <br>
-Neste projeto, as únicas entidade que tiveram um relacionamento direto construído no banco de dados foram o Estacionamento e o Extrato. apesar disso, a Placa do Veículo serve como atributo que une as três entidades. 
+Neste projeto, as únicas entidade que tiveram um relacionamento direto construído no banco de dados foram o Estacionamento e o Extrato. Apesar disso, a Placa do Veículo serve como atributo que une as três entidades. 
 <br>
 <br>
 _Nota: Todos os endpoints "findAll()" possuem suporte para filtro de qualquer um dos campos da entidade requerida, mas se optar por testá-lo sem filtros, é só chamá-lo sem passar nenhum parâmetro!_
